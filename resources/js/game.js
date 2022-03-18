@@ -526,10 +526,10 @@ class Game {
 
         }).then((result) => {
 
+            this._board.hideMoves()
+            
             if (result.isConfirmed) 
                 this.newGame(this._board._board_length)
-            else
-                this._board.hideMoves()
 
         })
 
