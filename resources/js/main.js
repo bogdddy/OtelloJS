@@ -118,8 +118,7 @@ $(document).ready(() => {
 
     let game = new Game(player1, player2)
 
-    // game.newGame(game_info.board_length)
-    game.newGame(4)
+    game.newGame(game_info.board_length)
 
   }
 
