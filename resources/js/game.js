@@ -1,13 +1,13 @@
 class Game {
 
     constructor(player1, player2) {
-        this._playing = false;
-        this._player1 = player1;
-        this._player2 = player2;
-        this._turn = player1;
-        this._board = null;
-        this._pieces_placed = 4;
-        this._possible_moves = new Array();
+        this._playing = false
+        this._player1 = player1
+        this._player2 = player2
+        this._turn = player1
+        this._board = null
+        this._pieces_placed = 4
+        this._possible_moves = new Array()
     }
 
     get turn() {
@@ -15,7 +15,7 @@ class Game {
     }
 
     get opponent() {
-        return this._turn == this._player1 ? this._player2 : this._player1;
+        return this._turn == this._player1 ? this._player2 : this._player1
     }
 
     get board() {
@@ -38,7 +38,7 @@ class Game {
      * @param {number} length -> board length 
      */
     newBoard(length) {
-        this._board = new Board(length);
+        this._board = new Board(length)
     }
 
 
@@ -49,15 +49,22 @@ class Game {
      */
     newGame(board_length) {
 
-        this._turn = this._player1.color == "white" ? this._player1 : this._player2;
+        this._turn = this._player1.color == "white" ? this._player1 : this._player2
 
-        this._playing = true;
-        this.newBoard(board_length); // create Board
-        this.board.printBoard(); // print board
-        this.fillBoard(); //  add Cells and pieces
-        this.addEventsToBoard(); // add listeners to board
-        this.board.fillLayout(this._player1, this._player2); // add players to layout
-        this.getMoves();
+        this._playing = true
+        this.newBoard(board_length) // create Board
+        this.board.printBoard() // print board
+        this.fillBoard() //  add Cells and pieces
+        this.addEventsToBoard() // add listeners to board
+        this.board.fillLayout(this._player1, this._player2) // add players to layout
+
+        // game variables
+        this._pieces_placed = 4
+        this._possible_moves = new Array()
+        this._player1.pieces = 2
+        this._player2.pieces = 2
+
+        this.getMoves()
 
     }
 
@@ -248,6 +255,8 @@ class Game {
      */
     placePiece(row, col) {
 
+        this._pieces_placed += 1
+
         this.clearMoves()
 
         // place piece
@@ -257,7 +266,7 @@ class Game {
         this.checkCapturedPieces(row, col)
 
         // check if all pieces have been placed
-        if (this._pieces_placed == Math.pow(this._board.cells.length, 2))
+        if (this._pieces_placed == Math.pow(this._board.length, 2))
             this.endGame()
 
         // check if opponent has moves left
@@ -324,10 +333,9 @@ class Game {
         this._board.updatePieces( this.turn.color, this.turn.pieces)
         this._board.updatePieces( this.opponent.color, this.opponent.pieces)
         
-
         // check if opponent has no pieces left, if so, end the game
         if (this.opponent.pieces == 0) 
-            this.winner(this.turn)    
+            this.winner(this.turn.name)    
 
     }
 
@@ -408,7 +416,10 @@ class Game {
      * Looks which player has more pieces and calls winner modal
      */
     endGame(){
-        this._player1.pieces > this._player2.pieces ? this.winner(this._player1) : this.winner(this._player2)
+        if (this._player1.pieces == this._player2.pieces)
+            this.winner("Noone")
+        else
+            this._player1.pieces > this._player2.pieces ? this.winner(this._player1.name) : this.winner(this._player2.name)
     }
 
     /**
@@ -421,7 +432,7 @@ class Game {
 
         Swal.fire({
 
-            text: `${winner.name} WINS !!!`,
+            text: `${winner} WINS !!!`,
             imageUrl: './resources/images/win.jpg',
             imageWidth: 400,
             imageHeight: 300,
