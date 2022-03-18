@@ -248,8 +248,7 @@ class Game {
      */
     placePiece(row, col) {
 
-        this._board.hideMoves()
-        this._possible_moves = []
+        this.clearMoves()
 
         // place piece
         this.getCell(row, col).piece = this._turn.color
@@ -380,6 +379,16 @@ class Game {
         }
 
         return false
+    }
+
+    /**
+     * Hides placeholders from board and empties _posssible moves array
+     */
+    clearMoves() {
+
+        this._board.hideMoves()
+        this._possible_moves = []
+
     }
 
     /**
@@ -526,7 +535,7 @@ class Game {
 
         }).then((result) => {
 
-            this._board.hideMoves()
+            this.clearMoves()
             
             if (result.isConfirmed) 
                 this.newGame(this._board._board_length)
