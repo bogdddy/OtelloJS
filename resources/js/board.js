@@ -99,7 +99,7 @@ class Board {
      */
     showMove(row, col, color) {
 
-        let piece_HTML = `<img class="img-fluid placeholder" src="./resources/images/piece_${color}.png">`;
+        let piece_HTML = `<img class="img-fluid piece_placeholder" src="./resources/images/piece_${color}.png">`;
 
         $(`#${row}-${col}`).html(piece_HTML); // place piece
 
@@ -114,7 +114,6 @@ class Board {
     hideMoves(){
 
         let cells = this.possibleMoves;
-        console.log(cells);
 
         for (let cell of cells) {
             $(`${cell}`).html("")

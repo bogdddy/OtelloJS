@@ -35,7 +35,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
-                    <h5 class="modal-title" id="staticBackdropLabel">Otello</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Otello by bogdddy</h5>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
@@ -46,7 +46,7 @@
                                 <h5 class="card-header">PLAYER 1</h5>
                                 <div class="card-body">
                                     <div class="avatar">
-                                        <img class="w-50" src="./resources/images/avatar.png">
+                                        <img class="w-50" src="./resources/images/avatar1.png">
                                         <br>
                                         <label id="nick_label" for="p1-nickname">Nickname:</label>
                                         <input type="text" id="p1-nickname" placeholder="Player1" maxlength="10"/>
@@ -61,7 +61,7 @@
                                 <h5 class="card-header">PLAYER 2</h5>
                                 <div class="card-body">
                                     <div class="avatar">
-                                        <img class="w-50" src="./resources/images/avatar.png">
+                                        <img class="w-50" src="./resources/images/avatar2.png">
                                         <br>
                                         <label id="nick_label" for="p2-nickname">Nickname:</label>
                                         <input type="text" id="p2-nickname" placeholder="Player2" maxlength="10"/>
@@ -73,7 +73,15 @@
                                 </div>
                             </div>
 
-                            <!-- TODO: ask board length  -->
+                            <!-- board length -->
+                            <div class="d-flex flex-row w-50 m-4 justify-content-around text-middle">
+                                <label class="text-middle"><strong> Select board size: </strong></label>
+                                <select class="form-control w-50 text-center" id="board-length">
+                                  <option value="8"> 8x8 </option>
+                                  <option value="10"> 10x10 </option>
+                                  <option value="16"> 16x16 </option>
+                                </select>
+                            </div>
 
                             <!-- game rules  -->
                             <div class="accordion" id="accordionExample">
@@ -88,7 +96,12 @@
                                     <div id="collapseOne" class="accordion-collapse collapse"
                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-
+                                            <p> White player always moves first </p>
+                                            <p> You can only place pieces in the indicated spots </p>
+                                            <p> If you have no moves left, your turn will be skipped </p>
+                                            <p> If both players have no moves left, the game ends </p>
+                                            <p> You can only surrender during your turn </p>
+                                            <p> GL HF and don't cheat !! </p>
                                         </div>
 
                                         <div class="text-end">
@@ -113,8 +126,8 @@
     <!-- in game player info -->
     <div class="container">
         <div class="player flex-column justify-content-around">
-            <section id="p1" class="player_name">PLAYER A</section>
-            <img id="p1-avatar" src="./resources/images/avatar.png" />
+            <section id="p1" class="player_name">Player 1</section>
+            <img id="p1-avatar" src="./resources/images/avatar1.png" />
             <section id="p1-color">
                 <span id="p1-pieces"></span>
             </section>
@@ -126,8 +139,8 @@
             </div>
         </div>
         <div class="player">
-            <section id="p2" class="player_name">PLAYER B</section>
-            <img id="p2-avatar" src="./resources/images/avatar.png" />
+            <section id="p2" class="player_name">Player 2</section>
+            <img id="p2-avatar" src="./resources/images/avatar2.png" />
             <section id="p2-color">
                 <span id="p2-pieces"></span>
             </section>

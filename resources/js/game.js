@@ -49,7 +49,7 @@ class Game {
      */
     newGame(board_length) {
 
-        this._player1.color == "white" ? this._turn = this._player1 : this._turn = this._player2;
+        this._turn = this._player1.color == "white" ? this._player1 : this._player2;
 
         this._playing = true;
         this.newBoard(board_length); // create Board
@@ -153,7 +153,7 @@ class Game {
      * @returns cell object
      */
     getCell(row, col) {
-        return this._board.cells.find(cell => cell.row == row && cell.col == col);
+        return this._board.cells.find(cell => cell.row == row && cell.col == col)
     }
 
     /**
@@ -161,7 +161,7 @@ class Game {
      * @returns array of Pieces
      */
     getEmptyCells() {
-        return this._board.cells.find(cell => cell.piece == null);
+        return this._board.cells.find(cell => cell.piece == null)
     }
 
     /**
@@ -178,7 +178,7 @@ class Game {
      */
     getMoves() {
 
-        let cells = this.getPieces(this._turn.color);
+        let cells = this.getPieces(this._turn.color)
 
         for (let cell of cells) {
             for (let move of this.move_directions) {
@@ -267,11 +267,11 @@ class Game {
             // check if current player has moves left
             if (!this.checkMovesLeft(this.turn)) 
                 //if both players have no moves left, end the game
-                this.endGame()
+                this.noMovesLeftToast()
             
             // if opponent no moves left skip turn
             else
-                this.getMoves()
+                this.skipTurnToast()
             
         } else
             this.changeTurn()
@@ -285,10 +285,10 @@ class Game {
      */
     checkCapturedPieces(row, col) {
 
-        let captured_pieces = 0;
-        let captured = false;
-        let row_aux = row;
-        let col_aux = col;
+        let captured_pieces = 0
+        let captured = false
+        let row_aux = row
+        let col_aux = col
 
         // check pieces to capture in every direction
         for (let move of this.move_directions) {
@@ -307,15 +307,15 @@ class Game {
 
                 }
 
-                row_aux += move.row;
-                col_aux += move.col;
+                row_aux += move.row
+                col_aux += move.col
 
             }
 
             // reset for next direction
-            row_aux = row;
-            col_aux = col;
-            captured = false;
+            row_aux = row
+            col_aux = col
+            captured = false
 
         }
 
@@ -387,16 +387,16 @@ class Game {
      */
     changeTurn() {
 
-        this.board.changeTurn(this._turn, this.opponent);
+        this.board.changeTurn(this._turn, this.opponent)
 
-        this._turn == this._player1 ? this._turn = this._player2 : this._turn = this._player1;
+        this._turn = this._turn == this._player1 ? this._player2 : this._player1
 
         this.getMoves();
 
     }
 
     /**
-     * Looks who which player has more pieces and calls winner modal
+     * Looks which player has more pieces and calls winner modal
      */
     endGame(){
         this._player1.pieces > this._player2.pieces ? this.winner(this._player1) : this.winner(this._player2)
@@ -408,11 +408,11 @@ class Game {
      */
     winner(winner) {
 
-        this._playing = false;
+        this._playing = false
 
         Swal.fire({
 
-            text: `${winner.name} WINS with ${winner.pieces}!!!`,
+            text: `${winner.name} WINS !!!`,
             imageUrl: './resources/images/win.jpg',
             imageWidth: 400,
             imageHeight: 300,
@@ -424,23 +424,39 @@ class Game {
 
     }
 
-    skipTurnModal() {
+    /**
+     * Shows a toast saying that the turn is skipped
+     */
+    skipTurnToast() {
 
-            // confirm surrender
             Swal.fire({
 
                 title: `${this.opponent.name} has no moves, the turn will be skipped`,
                 position: 'center',
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yeee',
+                confirmButtonText: 'ok',
                 showCancelButton: false,
                 width: '40%',
 
-            }).then(() => {
+            }).then(() => { this.getMoves() })
 
-                    this.getMoves()
-                
-            })
+    }
+
+    /**
+     * Shows a toast saying that there are no moves left
+     */
+    noMovesLeftToast() {
+
+            Swal.fire({
+
+                title: `There are no moves left`,
+                position: 'center',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'ok',
+                showCancelButton: false,
+                width: '40%',
+
+            }).then(() => { this.endGame() })
 
     }
 
